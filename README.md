@@ -1,10 +1,10 @@
 # Docker-svFSI
-This Dockerfile will build `svFSI` executable from the most recent source code in the main repository. Assuming you already have [Docker](https://docs.docker.com/get-docker/) installed, please follow the steps below to run `svFSI`.
+This Dockerfile will build [`svFSI`](https://github.com/SimVascular/svFSI) executable from the most recent source code in the main repository. Assuming you already have [Docker](https://docs.docker.com/get-docker/) installed, please follow the steps below to run `svFSI`.
 
 1. Clone the current repository
 
    ```bash
-   git clone https://github.com/CZHU20/Docker-svFSI
+   git clone https://github.com/CZHU20/Docker-svFSI &&\
    cd Docker-svFSI
    ```
 
@@ -16,10 +16,32 @@ This Dockerfile will build `svFSI` executable from the most recent source code i
 
    This may take a while. Afterwards, run the command `docker images`, and you should see `svfsi-image`.
 
-3. Run the container in interactive mode
+3. Download the examples.
 
    ```bash
-   docker container run -it --rm --name svfsi-demo svfsi-image
+   git clone https://github.com/SimVascular/svFSI-Tests
    ```
 
-​		This will open a shell prompt and you can proceed as usual.
+4. Run the container in interactive mode.
+
+   ```bash
+   docker container run -v "$PWD"/svFSI-Tests:/home/test/svFSI-Tests -it --rm --name svfsi-demo svfsi-image
+   ```
+
+   This will open a shell prompt and you can proceed as usual.
+
+5. Let's take `04-fluid/06-channel-flow-2D` for example. In the shell prompt, run the following commands to generate the simulation results.
+
+   ```bash
+   cd svFSI-Tests/04-fluid/06-channel-flow-2D && \
+   svFSI ./svFSI_Taylor-Hood.inp
+   ```
+
+   The results will be stored in `1-procs` in vtu format, and can be viewed with [Paraview](https://www.paraview.org).
+
+6. After all tests are done, execute the following commands to exit the docker and delete the image.
+
+   ```bash
+   exit && \
+   docker rmi <IMAGE ID>
+   ```
