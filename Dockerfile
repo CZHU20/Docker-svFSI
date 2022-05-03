@@ -10,12 +10,12 @@ RUN apt-get install -yq gcc g++ gfortran
 RUN apt-get install -yq openmpi-bin libopenmpi-dev
 
 # Add non-root user and set up home directory
-# RUN useradd -ms /bin/bash test
-# RUN adduser test sudo
-# USER test
-
+RUN groupadd -g 999 testuser && \
+    useradd -r -u 999 -g testuser testuser
+USER testuser
 WORKDIR /home/test
 
+# Obtain source code
 RUN git clone https://github.com/SimVascular/svFSI
 
 # Compile svFSI source code

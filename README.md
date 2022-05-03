@@ -25,16 +25,16 @@ This Dockerfile will build [`svFSI`](https://github.com/SimVascular/svFSI) execu
 4. Run the container in interactive mode.
 
    ```bash
-   docker container run -v "$PWD"/svFSI-Tests:/home/test/svFSI-Tests -it --rm --name svfsi-demo svfsi-image
+   docker container run --cap-add=SYS_PTRACE -v "$PWD"/svFSI-Tests:/home/test/svFSI-Tests -it --rm --name svfsi-demo svfsi-image
    ```
 
-   This will open a shell prompt and you can proceed as usual.
+   This will open a shell prompt and you can proceed as usual. Here, `--cap-add=SYS_PTRACE` fixes a known [issue](https://github.com/open-mpi/ompi/issues/4948) of running openmpi in Docker.
 
 5. Let's take `04-fluid/06-channel-flow-2D` for example. In the shell prompt, run the following commands to generate the simulation results.
 
    ```bash
    cd svFSI-Tests/04-fluid/06-channel-flow-2D && \
-   svFSI ./svFSI_Taylor-Hood.inp
+   mpiexec -n 4 svFSI ./svFSI_Taylor-Hood.inp
    ```
 
    The results will be stored in `1-procs` in vtu format, and can be viewed with [Paraview](https://www.paraview.org).
