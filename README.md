@@ -37,7 +37,7 @@ This Dockerfile will build [`svFSI`](https://github.com/SimVascular/svFSI) execu
    mpiexec -n 4 svFSI ./svFSI_Taylor-Hood.inp
    ```
 
-   The results will be stored in `1-procs` in vtu format, and can be viewed with [Paraview](https://www.paraview.org).
+   The results will be stored in `4-procs` in vtu format, and can be viewed with [Paraview](https://www.paraview.org).
 
 6. After all tests are done, execute the following commands to exit the docker and delete the image.
 
