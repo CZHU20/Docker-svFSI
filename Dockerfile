@@ -4,14 +4,19 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 # Install supporting packages
 RUN apt-get update
+RUN apt-get install -yq --no-install-recommends apt-utils
 RUN apt-get install -yq git make cmake
 RUN apt-get install -yq libblas-dev liblapack-dev
 RUN apt-get install -yq gcc g++ gfortran 
 RUN apt-get install -yq openmpi-bin libopenmpi-dev
 
+# Create directory
+RUN mkdir -p /home/test
+
 # Add non-root user and set up home directory
 RUN groupadd -g 999 testuser && \
     useradd -r -u 999 -g testuser testuser
+RUN chown testuser /home/test
 USER testuser
 WORKDIR /home/test
 
