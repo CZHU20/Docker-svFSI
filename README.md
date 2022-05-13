@@ -1,5 +1,5 @@
 # Docker-svFSI
-This Dockerfile will build [`svFSI`](https://github.com/SimVascular/svFSI) executable from the most recent source code in the main repository. Assuming you already have [Docker](https://docs.docker.com/get-docker/) installed, please follow the steps below to run `svFSI`.
+This Dockerfile will build [`svFSI`](https://github.com/SimVascular/svFSI) executable from the most recent source code in the main repository. This procedure has been successfully tested on MacOS Big Sur, Ubuntu 18.04 and Windows 10 with WSL 2. Assuming you already have [Docker](https://docs.docker.com/get-docker/) installed, please follow the steps below to run `svFSI`.
 
 1. Clone the current repository
 
@@ -45,3 +45,9 @@ This Dockerfile will build [`svFSI`](https://github.com/SimVascular/svFSI) execu
    exit && \
    docker rmi <IMAGE ID>
    ```
+
+
+
+### Known Issues
+
+`svFSI` built with this Dockerfile won't work with any example that requires Trilinos. Trilinos takes too long to build within the Docker image, and we encourage any user that needs it to build `svFSI` from source. Please report any other issue through the GitHub page.
