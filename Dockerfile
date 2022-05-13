@@ -14,8 +14,7 @@ RUN apt-get install -yq openmpi-bin libopenmpi-dev
 RUN mkdir -p /home/test
 
 # Add non-root user and set up home directory
-RUN groupadd -g 999 testuser && \
-    useradd -r -u 999 -g testuser testuser
+RUN useradd testuser -u 1000 -g 100 -m -s /bin/bash
 RUN chown testuser /home/test
 USER testuser
 WORKDIR /home/test
